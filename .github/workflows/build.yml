@@ -14,6 +14,12 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Read version
+        run: |
+          VERSION=$(cat VERSION)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Building version $VERSION"
+
       - name: Compile
         run: |
           gcc hello.c -o hello
@@ -21,9 +27,15 @@ jobs:
       - name: Show files
         run: |
           ls -lh
+          file hello
 
-      - name: Upload binary
+      - name: Create archive
+        run: |
+          tar czf hello-${VERSION}.tar.gz hello
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: hello-binary
-          path: hello
+          name: hello-${{ env.VERSION }}
+          path: hello-${{ env.VERSION }}.tar.gz
+          
