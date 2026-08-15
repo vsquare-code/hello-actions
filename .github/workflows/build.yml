@@ -3,8 +3,8 @@ name: Every 10 mins Build and Release
 run-name: Build #${{ github.run_number }}
 
 on:
-  schedule:
-    - cron: '*/10 * * * *'   # Testing: every 10 minutes
+  #schedule:
+  #  - cron: '*/10 * * * *'   # Testing: every 10 minutes
   workflow_dispatch:
 
 permissions:
